@@ -3,13 +3,30 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
+  :root {
+    --navy: 26 26 46;
+    --brandRed: 230 57 70;
+    --offwhite: 241 250 238;
   }
+
   body {
-    @apply bg-navy text-offwhite font-body;
+    @apply bg-navy text-offwhite font-body antialiased;
+    background-color: #1A1A2E;
   }
-  h1, h2, h3, h4 {
+
+  h1, h2, h3, h4, h5, h6 {
     @apply font-heading uppercase tracking-tighter;
   }
+}
+
+/* Custom Scrollbar for the Gym Aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #1A1A2E;
+}
+::-webkit-scrollbar-thumb {
+  background: #E63946;
+  border-radius: 5px;
 }
