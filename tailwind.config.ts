@@ -9,8 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        navy: "#1A1A2E",
+        brandRed: "#E63946",
+        offwhite: "#F1FAEE",
+      },
+      fontFamily: {
+        heading: ["var(--font-montserrat)", "sans-serif"],
+        body: ["var(--font-inter)", "sans-serif"],
       },
     },
   },
