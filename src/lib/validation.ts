@@ -22,18 +22,21 @@ export const bookSchema = z.object({
 
 export type BookInput = z.infer<typeof bookSchema>;
 
-/** POST /api/book body (snake_case) */
+/** POST /api/book body (snake_case). Email omitted when empty — JSON.stringify drops undefined keys. */
 export const bookApiSchema = z.object({
   name: z.string().min(2, "Name is required"),
   phone: z.string().min(8, "Phone is required"),
-  email: z
-    .union([z.string(), z.null(), z.undefined()])
-    .transform((v) => {
-      if (v == null) return undefined;
-      const t = v.trim();
-      return t === "" ? undefined : t;
-    })
-    .pipe(z.union([z.undefined(), z.string().email("Valid email required")])),
+  email: z.preprocess(
+    (val) => {
+      if (val === undefined || val === null || val === "") return undefined;
+      if (typeof val === "string") {
+        const t = val.trim();
+        return t === "" ? undefined : t;
+      }
+      return val;
+    },
+    z.string().email("Valid email required").optional()
+  ),
   service: z.enum(["Free Trial", "Personal Training", "Group Class", "Gym Tour"]),
   preferred_date: z.string().min(1, "Preferred date is required"),
   preferred_time: z.string().min(1, "Preferred time is required"),

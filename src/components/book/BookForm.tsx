@@ -39,7 +39,16 @@ export default function BookForm() {
       router.push(`/thank-you?service=${encodeURIComponent(data.service)}`);
       return;
     }
-    setError("root", { message: "Could not submit. Try again or WhatsApp us." });
+    const hint =
+      json?.error === "Server configuration error"
+        ? "Server missing Supabase credentials (check Vercel: SUPABASE_SERVICE_ROLE_KEY and NEXT_PUBLIC_SUPABASE_URL)."
+        : json?.detail
+          ? `${json.error ?? "Error"}: ${json.detail}`
+          : json?.error === "Validation failed" && Array.isArray(json?.issues)
+            ? json.issues.map((i: { message?: string }) => i.message).filter(Boolean).join(" · ") ||
+              "Check all required fields."
+            : json?.error || "Could not submit. Try again or WhatsApp us.";
+    setError("root", { message: hint });
   }
 
   return (

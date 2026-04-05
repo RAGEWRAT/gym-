@@ -7,6 +7,7 @@ import { contactSchema, type ContactInput } from "@/lib/validation";
 
 export default function ContactForm() {
   const [status, setStatus] = useState<"idle" | "ok" | "err">("idle");
+  const [errMsg, setErrMsg] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -16,6 +17,7 @@ export default function ContactForm() {
 
   async function onSubmit(data: ContactInput) {
     setStatus("idle");
+    setErrMsg(null);
     const res = await fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -27,6 +29,13 @@ export default function ContactForm() {
       reset();
     } else {
       setStatus("err");
+      const hint =
+        json?.error === "Server configuration error"
+          ? "Server missing Supabase credentials. In Vercel, add SUPABASE_SERVICE_ROLE_KEY and NEXT_PUBLIC_SUPABASE_URL, then redeploy."
+          : json?.detail
+            ? `${json.error ?? "Error"}: ${json.detail}`
+            : json?.error || "Please try again or use WhatsApp.";
+      setErrMsg(hint);
     }
   }
 
@@ -42,7 +51,7 @@ export default function ContactForm() {
       ) : null}
       {status === "err" ? (
         <div className="rounded-md border border-brandRed/40 bg-brandRed/10 px-4 py-3 text-sm text-red-100">
-          Something went wrong. Please try again or message us on WhatsApp.
+          {errMsg ?? "Something went wrong. Please try again or message us on WhatsApp."}
         </div>
       ) : null}
 

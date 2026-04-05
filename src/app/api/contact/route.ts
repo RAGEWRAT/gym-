@@ -33,15 +33,26 @@ export async function POST(req: Request) {
 
     if (insertError) {
       console.error("[api/contact] Supabase insert:", insertError);
-      return NextResponse.json({ success: false, error: "Could not save message" }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Could not save message",
+          detail: insertError.message,
+        },
+        { status: 500 }
+      );
     }
 
-    await sendContactAdminEmail({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      message: data.message,
-    });
+    try {
+      await sendContactAdminEmail({
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        message: data.message,
+      });
+    } catch (emailErr) {
+      console.error("[api/contact] Email notification failed (message still saved):", emailErr);
+    }
 
     return NextResponse.json({ success: true });
   } catch (e) {

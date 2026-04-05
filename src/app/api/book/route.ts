@@ -38,22 +38,37 @@ export async function POST(req: Request) {
 
     if (insertError) {
       console.error("[api/book] Supabase insert:", insertError);
-      return NextResponse.json({ success: false, error: "Could not save booking" }, { status: 500 });
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Could not save booking",
+          detail: insertError.message,
+        },
+        { status: 500 }
+      );
     }
 
-    await sendBookingAdminEmail({
-      name: data.name,
-      phone: data.phone,
-      email: data.email,
-      service: data.service,
-      preferred_date: data.preferred_date,
-      preferred_time: data.preferred_time,
-      notes: data.notes ?? undefined,
-    });
+    try {
+      await sendBookingAdminEmail({
+        name: data.name,
+        phone: data.phone,
+        email: data.email,
+        service: data.service,
+        preferred_date: data.preferred_date,
+        preferred_time: data.preferred_time,
+        notes: data.notes ?? undefined,
+      });
+    } catch (emailErr) {
+      console.error("[api/book] Email notification failed (booking still saved):", emailErr);
+    }
 
     const sendUser = process.env.SEND_BOOKING_USER_EMAIL === "true";
     if (sendUser && data.email) {
-      await sendBookingUserConfirmation(data.email, data.name, data.service);
+      try {
+        await sendBookingUserConfirmation(data.email, data.name, data.service);
+      } catch (e) {
+        console.error("[api/book] User confirmation email failed:", e);
+      }
     }
 
     return NextResponse.json({ success: true });
