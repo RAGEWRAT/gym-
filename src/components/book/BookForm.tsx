@@ -21,8 +21,13 @@ export default function BookForm() {
 
   async function onSubmit(data: BookInput) {
     const payload = {
-      ...data,
+      name: data.fullName,
+      phone: data.phone,
       email: data.email?.trim() || undefined,
+      service: data.service,
+      preferred_date: data.preferredDate,
+      preferred_time: data.preferredTime,
+      notes: data.notes?.trim() || undefined,
     };
     const res = await fetch("/api/book", {
       method: "POST",
@@ -30,8 +35,8 @@ export default function BookForm() {
       body: JSON.stringify(payload),
     });
     const json = await res.json().catch(() => null);
-    if (res.ok && json?.ok) {
-      router.push("/thank-you");
+    if (res.ok && json?.success) {
+      router.push(`/thank-you?service=${encodeURIComponent(data.service)}`);
       return;
     }
     setError("root", { message: "Could not submit. Try again or WhatsApp us." });
@@ -48,7 +53,7 @@ export default function BookForm() {
           Full name <span className="text-brandRed">*</span>
         </label>
         <input
-          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+          className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
           {...register("fullName")}
         />
         {errors.fullName ? <p className="text-brandRed text-xs mt-1">{errors.fullName.message}</p> : null}
@@ -58,7 +63,7 @@ export default function BookForm() {
           Phone <span className="text-brandRed">*</span>
         </label>
         <input
-          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+          className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
           {...register("phone")}
         />
         {errors.phone ? <p className="text-brandRed text-xs mt-1">{errors.phone.message}</p> : null}
@@ -67,7 +72,7 @@ export default function BookForm() {
         <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Email</label>
         <input
           type="email"
-          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+          className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
           {...register("email")}
         />
         {errors.email ? <p className="text-brandRed text-xs mt-1">{errors.email.message}</p> : null}
@@ -77,7 +82,7 @@ export default function BookForm() {
           Service <span className="text-brandRed">*</span>
         </label>
         <select
-          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+          className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
           {...register("service")}
         >
           {services.map((s) => (
@@ -95,7 +100,7 @@ export default function BookForm() {
           </label>
           <input
             type="date"
-            className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+            className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
             {...register("preferredDate")}
           />
           {errors.preferredDate ? (
@@ -108,7 +113,7 @@ export default function BookForm() {
           </label>
           <input
             type="time"
-            className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+            className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
             {...register("preferredTime")}
           />
           {errors.preferredTime ? (
@@ -120,14 +125,14 @@ export default function BookForm() {
         <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Notes</label>
         <textarea
           rows={4}
-          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed resize-y"
+          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed resize-y min-h-[120px]"
           {...register("notes")}
         />
       </div>
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-md bg-brandRed py-3 font-bold hover:bg-brandRed/90 disabled:opacity-50"
+        className="w-full min-h-[52px] rounded-md bg-brandRed py-3 font-bold hover:bg-brandRed/90 disabled:opacity-50"
       >
         {isSubmitting ? "Submitting…" : "Submit booking"}
       </button>

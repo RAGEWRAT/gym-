@@ -1,9 +1,12 @@
 import PackagesClient from "@/components/packages/PackagesClient";
+import { buildPageMeta } from "@/lib/seo";
 
-export const metadata = {
-  title: "Packages | IronForge Gym",
-  description: "Membership tiers: Basic, Pro, Elite, and Day Pass at IronForge Gym.",
-};
+export const metadata = buildPageMeta({
+  title: "Packages",
+  description:
+    "Compare IronForge memberships — Basic, Pro, Elite, and Day Pass with features, pricing, and WhatsApp booking.",
+  path: "/packages",
+});
 
 export default function PackagesPage() {
   return (

@@ -1,53 +1,63 @@
 "use client";
 
+import { useMemo } from "react";
 import { Button } from "@/components/ui/Button";
-import { whatsappHref } from "@/lib/whatsapp";
-
-const plans = [
-  {
-    name: "Basic",
-    price: "₹1,500",
-    period: "/ mo",
-    blurb: "Gym access, locker, limited hours",
-    cta: { label: "WhatsApp Us", href: whatsappHref("Hi IronForge! I'm interested in the Basic membership.") },
-    external: true,
-  },
-  {
-    name: "Pro",
-    price: "₹2,500",
-    period: "/ mo",
-    blurb: "All-day access, 2 PT/month, group classes",
-    popular: true,
-    cta: { label: "Book Now", href: "/book" },
-    external: false,
-  },
-  {
-    name: "Elite",
-    price: "₹5,000",
-    period: "/ mo",
-    blurb: "Unlimited PT, nutrition, priority booking",
-    cta: { label: "Contact Us", href: whatsappHref("Hi IronForge! I'd like Elite membership details.") },
-    external: true,
-  },
-  {
-    name: "Day Pass",
-    price: "₹399",
-    period: "/ day",
-    blurb: "Single-day full access",
-    cta: { label: "WhatsApp Us", href: whatsappHref("Hi IronForge! I'd like a Day Pass.") },
-    external: true,
-  },
-];
-
-const rows: { feature: string; basic: string; pro: string; elite: string; day: string }[] = [
-  { feature: "Gym floor access", basic: "Peak + off-peak", pro: "All day", elite: "All day + priority", day: "1 day" },
-  { feature: "Locker", basic: "✓", pro: "✓", elite: "Dedicated", day: "Day locker" },
-  { feature: "Group classes", basic: "—", pro: "✓", elite: "✓", day: "1 class" },
-  { feature: "Personal training", basic: "Add-on", pro: "2 / month", elite: "Unlimited", day: "—" },
-  { feature: "Nutrition coaching", basic: "—", pro: "—", elite: "✓", day: "—" },
-];
+import {
+  buildWALink,
+  getWhatsAppNumber,
+  getBasicPlanMessage,
+  getProPlanMessage,
+  getElitePlanMessage,
+  getDayPassMessage,
+} from "@/lib/whatsapp";
 
 export default function PackagesClient() {
+  const plans = useMemo(() => {
+    const n = getWhatsAppNumber();
+    return [
+      {
+        name: "Basic",
+        price: "₹1,500",
+        period: "/ mo",
+        blurb: "Gym access, locker, limited hours",
+        href: buildWALink(n, getBasicPlanMessage()),
+        popular: false,
+      },
+      {
+        name: "Pro",
+        price: "₹2,500",
+        period: "/ mo",
+        blurb: "All-day access, 2 PT/month, group classes",
+        href: buildWALink(n, getProPlanMessage()),
+        popular: true,
+      },
+      {
+        name: "Elite",
+        price: "₹5,000",
+        period: "/ mo",
+        blurb: "Unlimited PT, nutrition, priority booking",
+        href: buildWALink(n, getElitePlanMessage()),
+        popular: false,
+      },
+      {
+        name: "Day Pass",
+        price: "₹399",
+        period: "/ day",
+        blurb: "Single-day full access",
+        href: buildWALink(n, getDayPassMessage()),
+        popular: false,
+      },
+    ];
+  }, []);
+
+  const rows: { feature: string; basic: string; pro: string; elite: string; day: string }[] = [
+    { feature: "Gym floor access", basic: "Peak + off-peak", pro: "All day", elite: "All day + priority", day: "1 day" },
+    { feature: "Locker", basic: "✓", pro: "✓", elite: "Dedicated", day: "Day locker" },
+    { feature: "Group classes", basic: "—", pro: "✓", elite: "✓", day: "1 class" },
+    { feature: "Personal training", basic: "Add-on", pro: "2 / month", elite: "Unlimited", day: "—" },
+    { feature: "Nutrition coaching", basic: "—", pro: "—", elite: "✓", day: "—" },
+  ];
+
   return (
     <>
       <section className="pt-28 pb-12 px-4 max-w-6xl mx-auto">
@@ -76,26 +86,16 @@ export default function PackagesClient() {
               <span className="text-3xl font-black">{p.price}</span>
               <span className="text-gray-500 text-sm ml-1">{p.period}</span>
             </div>
-            {p.external ? (
-              <a
-                href={p.cta.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`inline-flex justify-center rounded-md py-2.5 text-sm font-bold text-center ${
-                  p.popular ? "bg-white text-navy hover:bg-offwhite" : "bg-brandRed text-white hover:bg-brandRed/90"
-                }`}
-              >
-                {p.cta.label}
-              </a>
-            ) : (
-              <Button
-                className="w-full !bg-white !text-navy hover:!bg-offwhite !border-0"
-                size="md"
-                href={p.cta.href}
-              >
-                {p.cta.label}
-              </Button>
-            )}
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex min-h-[48px] items-center justify-center rounded-md py-2.5 text-sm font-bold text-center ${
+                p.popular ? "bg-white text-navy hover:bg-offwhite" : "bg-brandRed text-white hover:bg-brandRed/90"
+              }`}
+            >
+              WhatsApp Us
+            </a>
           </div>
         ))}
       </section>
@@ -126,12 +126,12 @@ export default function PackagesClient() {
         </table>
       </section>
 
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 p-4 bg-nearblack/95 border-t border-white/10 backdrop-blur">
-        <Button className="w-full" size="lg" href="/book">
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-nearblack/95 border-t border-white/10 backdrop-blur">
+        <Button className="w-full min-h-[48px]" size="lg" href="/book">
           Get Started
         </Button>
       </div>
-      <div className="h-20 md:hidden" aria-hidden />
+      <div className="h-24 md:hidden" aria-hidden />
     </>
   );
 }

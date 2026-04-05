@@ -24,7 +24,7 @@ export default function Navbar() {
           IRONFORGE
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav className="hidden md:flex items-center gap-1 flex-wrap justify-end">
           {links.map((l) => (
             <Button key={l.href} variant="ghost" size="sm" href={l.href}>
               {l.label}
@@ -37,7 +37,7 @@ export default function Navbar() {
 
         <button
           type="button"
-          className="lg:hidden p-2 text-offwhite rounded-md hover:bg-white/10"
+          className="md:hidden p-2 min-w-[44px] min-h-[44px] text-offwhite rounded-md hover:bg-white/10 flex items-center justify-center"
           aria-expanded={open}
           aria-label="Toggle menu"
           onClick={() => setOpen((o) => !o)}
@@ -47,7 +47,7 @@ export default function Navbar() {
       </div>
 
       {open ? (
-        <div className="lg:hidden border-t border-white/10 bg-navy px-4 py-4 flex flex-col gap-2">
+        <div className="md:hidden border-t border-white/10 bg-navy px-4 py-4 flex flex-col gap-2">
           {links.map((l) => (
             <Link
               key={l.href}

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { Share2 } from "lucide-react";
-import { whatsappHref } from "@/lib/whatsapp";
+import { getTrainerBookingMessage, whatsappHref } from "@/lib/whatsapp";
 
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as const;
 
@@ -211,7 +211,9 @@ export default function ClassesClient() {
               <p className="text-xs text-brandRed font-bold uppercase mb-3">{c.difficulty}</p>
               <p className="text-sm text-gray-400 leading-relaxed mb-6">{c.description}</p>
               <a
-                href={whatsappHref(`Hi! I'd like to book ${c.name} with ${c.trainer}.`)}
+                href={whatsappHref(
+                  `Hi IronForge! I'd like to book "${c.name}" with coach ${c.trainer} (${c.duration}).`
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex w-full justify-center rounded-md bg-brandRed py-2 text-sm font-bold hover:bg-brandRed/90"
@@ -250,7 +252,7 @@ export default function ClassesClient() {
                   </a>
                 </div>
                 <a
-                  href={whatsappHref(`Hi IronForge! I'd like to book with ${t.name}.`)}
+                  href={whatsappHref(getTrainerBookingMessage(t.name, t.specs.join(", ")))}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 inline-flex w-full justify-center rounded-md border border-white/20 py-2 text-sm font-bold hover:bg-white/10"

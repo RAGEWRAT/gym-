@@ -1,17 +1,20 @@
 import { Button } from "@/components/ui/Button";
 import SectionInView from "@/components/motion/SectionInView";
+import { buildPageMeta } from "@/lib/seo";
 import { Bus, MapPin, Train } from "lucide-react";
+
+export const metadata = buildPageMeta({
+  title: "Location",
+  description:
+    "IronForge Gym in Civil Lines, Kanpur — map, hours, directions, nearby landmarks, and public transport.",
+  path: "/location",
+});
 
 const mapEmbed =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114311.96827056643!2d80.26425315510688!3d26.447547000000003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399c4770326db331%3A0x9698d2df96478314!2sKanpur%2C%20Uttar%20Pradesh!5e0!3m2!1sen!2sin!4v1712150000000!5m2!1sen!2sin";
 
 const directionsUrl =
   "https://www.google.com/maps/dir/?api=1&destination=123+Ironforge+Lane+Civil+Lines+Kanpur";
-
-export const metadata = {
-  title: "Location | IronForge Gym",
-  description: "Find IronForge Gym in Civil Lines, Kanpur — map, hours, and directions.",
-};
 
 export default function LocationPage() {
   return (

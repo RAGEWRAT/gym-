@@ -1,6 +1,6 @@
 import { MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { whatsappHref } from "@/lib/whatsapp";
+import { whatsappHref, getGenericMessage } from "@/lib/whatsapp";
 
 export default function FooterCTA() {
   return (
@@ -13,14 +13,14 @@ export default function FooterCTA() {
           Book a free trial or message us on WhatsApp — we&apos;ll help you pick the right membership.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-stretch sm:items-center">
-          <Button size="lg" href="/book" className="min-w-[200px]">
+          <Button size="lg" href="/book" className="min-w-[200px] min-h-[52px] justify-center">
             Book Now
           </Button>
           <a
-            href={whatsappHref("Hi IronForge! I'd like to know more about memberships and trials.")}
+            href={whatsappHref(getGenericMessage())}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-md font-medium transition-colors px-6 py-3 text-lg border border-white/20 text-offwhite hover:bg-white/10 min-w-[200px]"
+            className="inline-flex min-h-[52px] items-center justify-center gap-2 rounded-md font-medium transition-colors px-6 py-3 text-lg border border-white/20 text-offwhite hover:bg-white/10 min-w-[200px]"
           >
             <MessageCircle size={22} />
             WhatsApp

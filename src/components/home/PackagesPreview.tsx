@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/Button";
-import { whatsappHref } from "@/lib/whatsapp";
+import { whatsappHref, getBasicPlanMessage, getElitePlanMessage } from "@/lib/whatsapp";
 
 const basicFeatures = ["Gym access", "Locker", "Off-peak hours", "App check-in"];
 const proFeatures = ["All-day access", "2 PT sessions / month", "Group classes", "Progress review"];
@@ -22,7 +22,7 @@ export default function PackagesPreview() {
             price="₹1,500"
             period="/ month"
             features={basicFeatures}
-            cta={{ label: "Chat on WhatsApp", href: whatsappHref("Hi IronForge! I'm interested in the Basic package.") }}
+            cta={{ label: "Chat on WhatsApp", href: whatsappHref(getBasicPlanMessage()) }}
             variant="light"
           />
           <PackageCard
@@ -41,7 +41,7 @@ export default function PackagesPreview() {
             price="₹5,000"
             period="/ month"
             features={eliteFeatures}
-            cta={{ label: "Contact Us", href: whatsappHref("Hi IronForge! I'd like details on the Elite package.") }}
+            cta={{ label: "Contact Us", href: whatsappHref(getElitePlanMessage()) }}
             variant="dark"
           />
         </div>
@@ -106,8 +106,8 @@ function PackageCard({
           rel="noopener noreferrer"
           className={
             variant === "dark"
-              ? "inline-flex w-full items-center justify-center rounded-md font-medium transition-colors px-6 py-3 text-lg bg-brandRed text-white hover:bg-brandRed/90 text-center"
-              : "inline-flex w-full items-center justify-center rounded-md font-medium transition-colors px-6 py-3 text-lg bg-navy text-white hover:bg-nearblack text-center"
+              ? "inline-flex w-full min-h-[48px] items-center justify-center rounded-md font-medium transition-colors px-6 py-3 text-lg bg-brandRed text-white hover:bg-brandRed/90 text-center"
+              : "inline-flex w-full min-h-[48px] items-center justify-center rounded-md font-medium transition-colors px-6 py-3 text-lg bg-navy text-white hover:bg-nearblack text-center"
           }
         >
           {cta.label}
@@ -117,8 +117,8 @@ function PackageCard({
           variant={variant === "popular" ? "secondary" : "default"}
           className={
             variant === "popular"
-              ? "w-full !bg-white !text-navy hover:!bg-offwhite !border-0"
-              : "w-full"
+              ? "w-full min-h-[48px] !bg-white !text-navy hover:!bg-offwhite !border-0"
+              : "w-full min-h-[48px]"
           }
           size="lg"
           href={cta.href}

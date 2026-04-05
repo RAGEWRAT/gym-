@@ -2,22 +2,25 @@
 
 import { MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getGenericMessage, whatsappHref } from "@/lib/whatsapp";
 
 export function WhatsAppButton() {
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "1234567890";
-
   return (
     <a
-      href={`https://wa.me/${whatsappNumber}`}
+      href={whatsappHref(getGenericMessage())}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        "fixed bottom-6 right-6 z-50 bg-[#25D366] p-4 rounded-full shadow-lg",
-        "hover:scale-110 transition-transform flex items-center gap-2 text-white"
+        "fixed z-50 bg-[#25D366] rounded-full shadow-lg",
+        "hover:scale-105 transition-transform flex items-center gap-2 text-white",
+        "min-h-[52px] min-w-[52px] p-3 md:px-4 md:py-3",
+        "bottom-[6.5rem] right-4 md:bottom-6 md:right-6",
+        "max-sm:max-w-[calc(100vw-2rem)]"
       )}
+      aria-label="Chat on WhatsApp"
     >
-      <MessageCircle size={28} />
-      <span className="font-bold">CHAT WITH US</span>
+      <MessageCircle size={26} className="shrink-0" />
+      <span className="font-bold text-sm sm:text-base pr-1 hidden sm:inline">CHAT WITH US</span>
     </a>
   );
 }

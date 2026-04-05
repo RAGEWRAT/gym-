@@ -1,7 +1,15 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import SectionInView from "@/components/motion/SectionInView";
+import { buildPageMeta } from "@/lib/seo";
 import { Heart, Shield, Target, Users } from "lucide-react";
+
+export const metadata = buildPageMeta({
+  title: "About",
+  description:
+    "Our story, values, and milestones — IronForge Gym is Kanpur's home for serious strength training and community.",
+  path: "/about",
+});
 
 const values = [
   { title: "Discipline", desc: "We show up consistently — and we help you do the same.", icon: Target },

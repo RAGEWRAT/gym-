@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { buildPageMeta } from "@/lib/seo";
 
-export const metadata = {
-  title: "Privacy Policy | IronForge Gym",
-  description: "IronForge Gym privacy policy.",
-};
+export const metadata = buildPageMeta({
+  title: "Privacy Policy",
+  description: "How IronForge Gym collects, uses, and retains information from website forms and inquiries.",
+  path: "/privacy",
+});
 
 export default function PrivacyPage() {
   return (

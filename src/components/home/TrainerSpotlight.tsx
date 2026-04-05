@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { whatsappHref } from "@/lib/whatsapp";
+import { BLUR_DATA_URL } from "@/lib/image-blur";
+import { whatsappHref, getTrainerBookingMessage } from "@/lib/whatsapp";
 
 const trainers = [
   {
@@ -36,18 +37,24 @@ export default function TrainerSpotlight() {
               className="bg-nearblack border border-white/10 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-brandRed/30"
             >
               <div className="relative h-72 w-full">
-                <Image src={t.img} alt={t.name} fill className="object-cover" sizes="(max-width:768px) 100vw, 33vw" />
+                <Image
+                  src={t.img}
+                  alt={`${t.name}, ${t.specialization} coach at IronForge Gym`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width:768px) 100vw, 33vw"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
+                />
               </div>
               <div className="p-6 text-center md:text-left">
                 <h3 className="text-xl font-bold uppercase">{t.name}</h3>
                 <p className="text-brandRed font-bold text-sm mt-2 tracking-wide">{t.specialization}</p>
                 <a
-                  href={whatsappHref(
-                    `Hi IronForge! I'd like to book a session with ${t.name} (${t.specialization}).`
-                  )}
+                  href={whatsappHref(getTrainerBookingMessage(t.name, t.specialization))}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 inline-flex w-full items-center justify-center rounded-md font-medium transition-colors px-4 py-2 text-base bg-brandRed text-white hover:bg-brandRed/90"
+                  className="mt-6 inline-flex w-full min-h-[48px] items-center justify-center rounded-md font-medium transition-colors px-4 py-2 text-base bg-brandRed text-white hover:bg-brandRed/90"
                 >
                   Book Session
                 </a>

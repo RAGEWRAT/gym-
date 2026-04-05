@@ -1,11 +1,14 @@
 import ContactForm from "@/components/contact/ContactForm";
 import SectionInView from "@/components/motion/SectionInView";
-import { Share2, Mail, MapPin, Phone } from "lucide-react";
+import { buildPageMeta } from "@/lib/seo";
+import { whatsappHref, getGenericMessage } from "@/lib/whatsapp";
+import { MessageCircle, Share2, Mail, MapPin, Phone } from "lucide-react";
 
-export const metadata = {
-  title: "Contact | IronForge Gym",
-  description: "Contact IronForge Gym in Kanpur — visit, call, or send a message.",
-};
+export const metadata = buildPageMeta({
+  title: "Contact",
+  description: "Message IronForge Gym — email form, phone, address, or WhatsApp for memberships and questions.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return (
@@ -52,10 +55,23 @@ export default function ContactPage() {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-white/15 rounded-md px-4 py-2 hover:border-brandRed hover:text-brandRed"
+              className="inline-flex items-center gap-2 border border-white/15 rounded-md px-4 py-2 min-h-[48px] hover:border-brandRed hover:text-brandRed"
             >
               <Share2 size={18} />
               @ironforgegym
+            </a>
+          </div>
+          <div className="rounded-lg border border-white/15 bg-white/5 p-5">
+            <p className="font-bold text-offwhite uppercase text-xs tracking-widest mb-2">WhatsApp</p>
+            <p className="text-sm text-gray-400 mb-4">Message the front desk for quick answers on trials, pricing, and class times.</p>
+            <a
+              href={whatsappHref(getGenericMessage())}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex w-full min-h-[48px] items-center justify-center gap-2 rounded-md bg-[#25D366] px-4 py-3 font-bold text-white hover:opacity-90"
+            >
+              <MessageCircle size={20} />
+              Open WhatsApp
             </a>
           </div>
         </aside>

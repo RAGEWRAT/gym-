@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BLUR_DATA_URL } from "@/lib/image-blur";
 
 const images = [
   "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=1200&auto=format&fit=crop",
@@ -25,10 +26,12 @@ export default function GalleryStrip() {
           >
             <Image
               src={src}
-              alt={`IronForge gym gallery ${i + 1}`}
+              alt={`IronForge gym interior and equipment — photo ${i + 1}`}
               fill
               className="object-cover"
               sizes="320px"
+              placeholder="blur"
+              blurDataURL={BLUR_DATA_URL}
             />
           </div>
         ))}

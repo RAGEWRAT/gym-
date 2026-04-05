@@ -1,10 +1,13 @@
 import BookForm from "@/components/book/BookForm";
 import SectionInView from "@/components/motion/SectionInView";
+import { buildPageMeta } from "@/lib/seo";
 
-export const metadata = {
-  title: "Book | IronForge Gym",
-  description: "Book a free trial, PT session, group class, or gym tour at IronForge.",
-};
+export const metadata = buildPageMeta({
+  title: "Book",
+  description:
+    "Book a free trial, personal training, group class, or gym tour at IronForge Gym — pick your date and time.",
+  path: "/book",
+});
 
 export default function BookPage() {
   return (

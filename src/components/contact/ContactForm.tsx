@@ -21,7 +21,8 @@ export default function ContactForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (res.ok) {
+    const json = await res.json().catch(() => null);
+    if (res.ok && json?.success) {
       setStatus("ok");
       reset();
     } else {
@@ -48,7 +49,7 @@ export default function ContactForm() {
       <div>
         <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Name</label>
         <input
-          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+          className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
           {...register("name")}
         />
         {errors.name ? <p className="text-brandRed text-xs mt-1">{errors.name.message}</p> : null}
@@ -57,7 +58,7 @@ export default function ContactForm() {
         <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Email</label>
         <input
           type="email"
-          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+          className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
           {...register("email")}
         />
         {errors.email ? <p className="text-brandRed text-xs mt-1">{errors.email.message}</p> : null}
@@ -65,7 +66,7 @@ export default function ContactForm() {
       <div>
         <label className="block text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Phone</label>
         <input
-          className="w-full rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
+          className="w-full min-h-[48px] rounded-md bg-nearblack border border-white/15 px-4 py-3 text-offwhite focus:outline-none focus:ring-2 focus:ring-brandRed"
           {...register("phone")}
         />
         {errors.phone ? <p className="text-brandRed text-xs mt-1">{errors.phone.message}</p> : null}
@@ -82,7 +83,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-md bg-brandRed py-3 font-bold hover:bg-brandRed/90 disabled:opacity-50"
+        className="w-full min-h-[52px] rounded-md bg-brandRed py-3 font-bold hover:bg-brandRed/90 disabled:opacity-50"
       >
         {isSubmitting ? "Sending…" : "Send message"}
       </button>

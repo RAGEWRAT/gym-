@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { BLUR_DATA_URL } from "@/lib/image-blur";
 
 const classes = [
   {
@@ -61,7 +62,15 @@ export default function FeaturedClasses() {
               className="group bg-navy border border-white/10 rounded-lg overflow-hidden shadow-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:border-brandRed/30"
             >
               <div className="relative h-52 w-full">
-                <Image src={c.image} alt={c.name} fill className="object-cover" sizes="(max-width:768px) 100vw, 33vw" />
+                <Image
+                  src={c.image}
+                  alt={`${c.name} class at IronForge Gym`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width:768px) 100vw, 33vw"
+                  placeholder="blur"
+                  blurDataURL={BLUR_DATA_URL}
+                />
                 <span
                   className={`absolute top-3 right-3 text-xs font-black uppercase tracking-wider px-3 py-1 rounded ${badgeClass(
                     c.difficulty
