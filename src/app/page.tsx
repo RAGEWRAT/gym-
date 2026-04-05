@@ -1,5 +1,9 @@
 import { Button } from "@/components/ui/Button";
 import { ArrowRight } from "lucide-react";
+import StatsBar from "@/components/home/StatsBar";
+import WhyIronForge from "@/components/home/WhyIronForge";
+import PackagesPreview from "@/components/home/PackagesPreview";
+import TrainerSpotlight from "@/components/home/TrainerSpotlight";
 
 export default function Home() {
   return (
@@ -20,7 +24,7 @@ export default function Home() {
             FORGE YOUR <span className="text-brandRed">LEGACY</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-10 font-light">
-            Premium equipment. Elite coaching. No excuses. 
+            Premium equipment. Elite coaching. No excuses.
             Join Kanpur&apos;s most powerful fitness community today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -33,6 +37,11 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <StatsBar />
+      <WhyIronForge />
+      <PackagesPreview />
+      <TrainerSpotlight />
     </div>
   );
 }
