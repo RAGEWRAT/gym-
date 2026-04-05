@@ -1,130 +1,131 @@
 import { Button } from "@/components/ui/Button";
+import { whatsappHref } from "@/lib/whatsapp";
 
-const basicFeatures = [
-  "General Gym Access",
-  "Locker Room & Showers",
-  "Free Weights Area",
-  "Cardio Zone Access",
-  "Mobile App Access"
-];
-
-const proFeatures = [
-  "24/7 Access",
-  "2 PT Sessions",
-  "Group Classes",
-  "Nutrition Guidance",
-  "Progress Tracking"
-];
-
-const eliteFeatures = [
-  "All Pro Features Included",
-  "Unlimited Personal Training",
-  "Personal Nutritionist",
-  "Sauna & Recovery Suite",
-  "Dedicated VIP Locker",
-  "Monthly Body Composition Analysis"
-];
+const basicFeatures = ["Gym access", "Locker", "Off-peak hours", "App check-in"];
+const proFeatures = ["All-day access", "2 PT sessions / month", "Group classes", "Progress review"];
+const eliteFeatures = ["Unlimited PT", "Nutrition coaching", "Priority booking", "Recovery suite access"];
 
 export default function PackagesPreview() {
   return (
-    <section id="packages" className="py-24 bg-offwhite">
+    <section id="packages" className="py-24 bg-offwhite text-navy">
       <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-black text-center mb-16 text-navy">
+        <h2 className="text-4xl md:text-5xl font-black text-center mb-4">
           MEMBERSHIP <span className="text-brandRed">PACKAGES</span>
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <BasicCard />
-          <ProCard />
-          <EliteCard />
+        <p className="text-center text-navy/70 max-w-2xl mx-auto mb-14">
+          Start where you are — upgrade when you&apos;re ready. Preview pricing; full comparison on Packages.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+          <PackageCard
+            name="Basic"
+            blurb="Essential access for independent training."
+            price="₹1,500"
+            period="/ month"
+            features={basicFeatures}
+            cta={{ label: "Chat on WhatsApp", href: whatsappHref("Hi IronForge! I'm interested in the Basic package.") }}
+            variant="light"
+          />
+          <PackageCard
+            name="Pro"
+            blurb="Our best balance of access, coaching, and classes."
+            price="₹2,500"
+            period="/ month"
+            features={proFeatures}
+            cta={{ label: "Book Now", href: "/book" }}
+            variant="popular"
+            badge="Most Popular"
+          />
+          <PackageCard
+            name="Elite"
+            blurb="Maximum support for ambitious goals."
+            price="₹5,000"
+            period="/ month"
+            features={eliteFeatures}
+            cta={{ label: "Contact Us", href: whatsappHref("Hi IronForge! I'd like details on the Elite package.") }}
+            variant="dark"
+          />
         </div>
       </div>
     </section>
   );
 }
 
-function BasicCard() {
+function PackageCard({
+  name,
+  blurb,
+  price,
+  period,
+  features,
+  cta,
+  variant,
+  badge,
+}: {
+  name: string;
+  blurb: string;
+  price: string;
+  period: string;
+  features: string[];
+  cta: { label: string; href: string };
+  variant: "light" | "popular" | "dark";
+  badge?: string;
+}) {
+  const base =
+    "flex flex-col h-full rounded-lg border p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl";
+  const styles =
+    variant === "popular"
+      ? "bg-brandRed text-white border-brandRed shadow-2xl scale-[1.02] z-10 relative"
+      : variant === "dark"
+        ? "bg-nearblack text-offwhite border-white/10"
+        : "bg-white border-navy/10 text-navy shadow-md";
+
   return (
-    <div className="p-8 bg-white/5 border border-white/10 flex flex-col h-full hover:border-white/20 transition-colors">
-      <h3 className="text-xl font-bold uppercase tracking-wider mb-2">Basic</h3>
-      <p className="text-gray-400 text-sm mb-6">Perfect for solo grinders.</p>
-
+    <div className={`${base} ${styles}`}>
+      {badge ? (
+        <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-nearblack text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full border border-white/20">
+          {badge}
+        </span>
+      ) : null}
+      <h3 className="text-xl font-bold uppercase tracking-wider mb-2">{name}</h3>
+      <p className={`text-sm mb-6 ${variant === "popular" ? "text-white/90" : "text-current/70"}`}>{blurb}</p>
       <div className="mb-8">
-        <span className="text-4xl font-black font-heading">₹1,500</span>
-        <span className="text-gray-500 text-sm ml-2">/ month</span>
+        <span className="text-4xl font-black font-heading">{price}</span>
+        <span className={`text-sm ml-2 ${variant === "popular" ? "text-white/80" : "opacity-70"}`}>{period}</span>
       </div>
-
-      <ul className="space-y-4 mb-10 flex-grow">
-        {basicFeatures.map((feature) => (
-          <li key={feature} className="flex items-center text-sm text-gray-300">
-            <span className="text-brandRed mr-3">✓</span>
+      <ul className="space-y-3 mb-10 flex-grow">
+        {features.map((feature) => (
+          <li key={feature} className="flex items-center text-sm gap-2">
+            <span className={variant === "popular" ? "text-white" : "text-brandRed"}>✓</span>
             {feature}
           </li>
         ))}
       </ul>
-
-      <Button variant="secondary" className="w-full" href="#book">
-        SELECT BASIC
-      </Button>
-    </div>
-  );
-}
-
-function ProCard() {
-  return (
-    <div className="p-8 bg-brandRed scale-105 z-10 shadow-2xl flex flex-col h-full relative">
-      <span className="text-[10px] font-black uppercase mb-2 text-white">Most Popular</span>
-      <h3 className="text-xl font-bold uppercase tracking-wider mb-2 text-white">Pro</h3>
-      <p className="text-gray-200 text-sm mb-6">Balanced training & guidance.</p>
-
-      <div className="mb-8">
-        <span className="text-4xl font-black font-heading text-white">₹2,500</span>
-        <span className="text-gray-300 text-sm ml-2">/ month</span>
-      </div>
-
-      <ul className="space-y-4 mb-10 flex-grow">
-        {proFeatures.map((feature) => (
-          <li key={feature} className="flex items-center text-sm text-white">
-            <span className="text-white mr-3">✓</span>
-            {feature}
-          </li>
-        ))}
-      </ul>
-
-      <Button variant="secondary" className="w-full" href="#book">
-        SELECT PRO
-      </Button>
-    </div>
-  );
-}
-
-function EliteCard() {
-  return (
-    <div className="p-8 bg-nearblack border-2 border-white/10 flex flex-col h-full relative overflow-hidden group hover:border-brandRed/50 transition-all shadow-2xl">
-      {/* Decorative background element */}
-      <div className="absolute top-0 right-0 p-2 bg-brandRed/10 text-brandRed text-[10px] font-black uppercase tracking-tighter">
-        VIP ACCESS
-      </div>
-
-      <h3 className="text-xl font-bold uppercase tracking-wider mb-2 text-offwhite">Elite</h3>
-      <p className="text-gray-400 text-sm mb-6">Total transformation & luxury.</p>
-
-      <div className="mb-8">
-        <span className="text-4xl font-black font-heading text-brandRed">₹5,000</span>
-        <span className="text-gray-500 text-sm ml-2">/ month</span>
-      </div>
-
-      <ul className="space-y-4 mb-10 flex-grow">
-        {eliteFeatures.map((feature) => (
-          <li key={feature} className="flex items-center text-sm text-offwhite font-medium">
-            <span className="text-brandRed mr-3">★</span>
-            {feature}
-          </li>
-        ))}
-      </ul>
-
-      <Button variant="primary" className="w-full shadow-lg shadow-brandRed/20" href="#contact">
-        GO ELITE
-      </Button>
+      {cta.href.startsWith("http") ? (
+        <a
+          href={cta.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={
+            variant === "dark"
+              ? "inline-flex w-full items-center justify-center rounded-md font-medium transition-colors px-6 py-3 text-lg bg-brandRed text-white hover:bg-brandRed/90 text-center"
+              : "inline-flex w-full items-center justify-center rounded-md font-medium transition-colors px-6 py-3 text-lg bg-navy text-white hover:bg-nearblack text-center"
+          }
+        >
+          {cta.label}
+        </a>
+      ) : (
+        <Button
+          variant={variant === "popular" ? "secondary" : "default"}
+          className={
+            variant === "popular"
+              ? "w-full !bg-white !text-navy hover:!bg-offwhite !border-0"
+              : "w-full"
+          }
+          size="lg"
+          href={cta.href}
+        >
+          {cta.label}
+        </Button>
+      )}
     </div>
   );
 }

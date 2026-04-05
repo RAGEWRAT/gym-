@@ -5,7 +5,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 type CommonButtonProps = {
-  variant?: "default" | "outline" | "ghost" | "secondary";
+  variant?: "default" | "outline" | "ghost" | "secondary" | "primary";
   size?: "sm" | "md" | "lg";
   className?: string;
   children: React.ReactNode;
@@ -17,6 +17,7 @@ type ButtonProps =
 
 const variantStyles = {
   default: "bg-brandRed text-white hover:bg-brandRed/90",
+  primary: "bg-navy text-white hover:bg-nearblack",
   outline: "border border-offwhite text-offwhite hover:bg-white/10",
   ghost: "bg-transparent text-offwhite hover:bg-white/10",
   secondary: "bg-white/10 text-offwhite border border-white/20 hover:bg-white/20",

@@ -2,15 +2,21 @@ import { Button } from "@/components/ui/Button";
 
 export default function Footer() {
   return (
-    <footer className="mt-12 border-t border-white/10 bg-navy py-8 text-center text-sm text-offwhite">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-4 md:px-8">
-        <p>© {new Date().getFullYear()} IRONFORGE GYM. All rights reserved.</p>
-        <div className="flex gap-3">
-          <Button variant="outline" size="sm" href="#terms">
-            Terms
-          </Button>
-          <Button variant="outline" size="sm" href="#privacy">
+    <footer className="border-t border-white/10 bg-nearblack py-10 text-sm text-offwhite">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 md:px-8 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p className="font-black text-lg tracking-tight">IRONFORGE</p>
+          <p className="text-gray-400 mt-1">© {new Date().getFullYear()} IronForge Gym. All rights reserved.</p>
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <Button variant="outline" size="sm" href="/privacy">
             Privacy
+          </Button>
+          <Button variant="outline" size="sm" href="/contact">
+            Contact
+          </Button>
+          <Button variant="outline" size="sm" href="/book">
+            Book
           </Button>
         </div>
       </div>
