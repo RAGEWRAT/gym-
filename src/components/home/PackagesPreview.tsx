@@ -1,9 +1,28 @@
 import { Button } from "@/components/ui/Button";
 
-const packages = [
-  { name: "Basic", price: "1500", features: ["Gym Access", "Locker Room", "General Training"] },
-  { name: "Pro", price: "2500", features: ["24/7 Access", "2 PT Sessions", "Group Classes"], recommended: true },
-  { name: "Elite", price: "5000", features: ["Unlimited PT", "Nutrition Plan", "Sauna Access"] },
+const basicFeatures = [
+  "General Gym Access",
+  "Locker Room & Showers",
+  "Free Weights Area",
+  "Cardio Zone Access",
+  "Mobile App Access"
+];
+
+const proFeatures = [
+  "24/7 Access",
+  "2 PT Sessions",
+  "Group Classes",
+  "Nutrition Guidance",
+  "Progress Tracking"
+];
+
+const eliteFeatures = [
+  "All Pro Features Included",
+  "Unlimited Personal Training",
+  "Personal Nutritionist",
+  "Sauna & Recovery Suite",
+  "Dedicated VIP Locker",
+  "Monthly Body Composition Analysis"
 ];
 
 export default function PackagesPreview() {
@@ -14,19 +33,98 @@ export default function PackagesPreview() {
           MEMBERSHIP <span className="text-brandRed">PACKAGES</span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {packages.map((pkg) => (
-            <div key={pkg.name} className={`p-8 flex flex-col ${pkg.recommended ? 'bg-brandRed scale-105 z-10 shadow-2xl' : 'bg-white/5'}`}>
-              {pkg.recommended && <span className="text-[10px] font-black uppercase mb-2">Most Popular</span>}
-              <h3 className="text-2xl font-bold uppercase">{pkg.name}</h3>
-              <div className="text-4xl font-black my-6">₹{pkg.price}<span className="text-sm font-normal">/mo</span></div>
-              <ul className="space-y-3 mb-8 flex-grow">
-                {pkg.features.map(f => <li key={f} className="text-sm opacity-80">✓ {f}</li>)}
-              </ul>
-              <Button variant={pkg.recommended ? "secondary" : "primary"}>SELECT PLAN</Button>
-            </div>
-          ))}
+          <BasicCard />
+          <ProCard />
+          <EliteCard />
         </div>
       </div>
     </section>
+  );
+}
+
+function BasicCard() {
+  return (
+    <div className="p-8 bg-white/5 border border-white/10 flex flex-col h-full hover:border-white/20 transition-colors">
+      <h3 className="text-xl font-bold uppercase tracking-wider mb-2">Basic</h3>
+      <p className="text-gray-400 text-sm mb-6">Perfect for solo grinders.</p>
+
+      <div className="mb-8">
+        <span className="text-4xl font-black font-heading">₹1,500</span>
+        <span className="text-gray-500 text-sm ml-2">/ month</span>
+      </div>
+
+      <ul className="space-y-4 mb-10 flex-grow">
+        {basicFeatures.map((feature) => (
+          <li key={feature} className="flex items-center text-sm text-gray-300">
+            <span className="text-brandRed mr-3">✓</span>
+            {feature}
+          </li>
+        ))}
+      </ul>
+
+      <Button variant="secondary" className="w-full" href="#book">
+        SELECT BASIC
+      </Button>
+    </div>
+  );
+}
+
+function ProCard() {
+  return (
+    <div className="p-8 bg-brandRed scale-105 z-10 shadow-2xl flex flex-col h-full relative">
+      <span className="text-[10px] font-black uppercase mb-2 text-white">Most Popular</span>
+      <h3 className="text-xl font-bold uppercase tracking-wider mb-2 text-white">Pro</h3>
+      <p className="text-gray-200 text-sm mb-6">Balanced training & guidance.</p>
+
+      <div className="mb-8">
+        <span className="text-4xl font-black font-heading text-white">₹2,500</span>
+        <span className="text-gray-300 text-sm ml-2">/ month</span>
+      </div>
+
+      <ul className="space-y-4 mb-10 flex-grow">
+        {proFeatures.map((feature) => (
+          <li key={feature} className="flex items-center text-sm text-white">
+            <span className="text-white mr-3">✓</span>
+            {feature}
+          </li>
+        ))}
+      </ul>
+
+      <Button variant="secondary" className="w-full" href="#book">
+        SELECT PRO
+      </Button>
+    </div>
+  );
+}
+
+function EliteCard() {
+  return (
+    <div className="p-8 bg-nearblack border-2 border-white/10 flex flex-col h-full relative overflow-hidden group hover:border-brandRed/50 transition-all shadow-2xl">
+      {/* Decorative background element */}
+      <div className="absolute top-0 right-0 p-2 bg-brandRed/10 text-brandRed text-[10px] font-black uppercase tracking-tighter">
+        VIP ACCESS
+      </div>
+
+      <h3 className="text-xl font-bold uppercase tracking-wider mb-2 text-offwhite">Elite</h3>
+      <p className="text-gray-400 text-sm mb-6">Total transformation & luxury.</p>
+
+      <div className="mb-8">
+        <span className="text-4xl font-black font-heading text-brandRed">₹5,000</span>
+        <span className="text-gray-500 text-sm ml-2">/ month</span>
+      </div>
+
+      <ul className="space-y-4 mb-10 flex-grow">
+        {eliteFeatures.map((feature) => (
+          <li key={feature} className="flex items-center text-sm text-offwhite font-medium">
+            <span className="text-brandRed mr-3">★</span>
+            {feature}
+          </li>
+        ))}
+      </ul>
+
+      <Button variant="primary" className="w-full shadow-lg shadow-brandRed/20" href="#contact">
+        GO ELITE
+      </Button>
+    </div>
   );
 }

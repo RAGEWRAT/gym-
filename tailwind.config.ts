@@ -12,6 +12,7 @@ const config: Config = {
         navy: "#1A1A2E",
         brandRed: "#E63946",
         offwhite: "#F1FAEE",
+        nearblack: "#0F0F0F",
       },
       fontFamily: {
         heading: ["var(--font-montserrat)", "sans-serif"],
